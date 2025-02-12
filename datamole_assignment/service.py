@@ -14,9 +14,14 @@ class GithubEventsService:
                 "X-GitHub-Api-Version": "2022-11-28",
             }
         )
-        log.debug(f"Initialized async client "
+        log.info(f"Initialized async client "
                   f"[base_url: {self.client.base_url}, "
                   f"headers: {self.client.headers}]")
+
+
+    async def close(self):
+        await self.client.aclose()
+        log.info("Closed async client")
 
 
     async def events(self, owner: str, repo: str) -> dict[str, any]:
