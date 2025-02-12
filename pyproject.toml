@@ -1,7 +1,7 @@
 [project]
 name = "datamole-assignment"
 version = "0.0.1"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 
 description = "Python web service for monitoring activities on github"
 authors = [{name = "Norbert Dopjera",email = "ndopjera@gmail.com"}]
