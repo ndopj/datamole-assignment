@@ -3,18 +3,18 @@ from typing import Union
 import uvicorn
 from fastapi import FastAPI
 
-from datamole_assignment.setup import config, log
+from datamole_assignment.setup import config
+from datamole_assignment.service import GithubEventsService
+
 
 app = FastAPI()
+github = GithubEventsService()
 
 
 @app.get("/")
-def read_root():
-    log.info(f"Github URL: {config.github_url}")
-    log.debug("This is a debug messages")
-    log.warning("This is a warning message")
-    log.error("This is an error message")
-    return {"Hello": "World"}
+async def read_root():
+    response = await github.events("fastapi", "fastapi")
+    return response
 
 
 @app.get("/items/{item_id}")
