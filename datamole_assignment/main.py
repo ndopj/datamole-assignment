@@ -24,6 +24,7 @@ app.include_router(events_router, prefix="/v1/events", tags=["Events API"])
 
 if __name__ == '__main__':
     uvicorn.run("datamole_assignment.main:app",
+                host=config.host,
                 port=config.port,
                 log_level=config.log_level.lower(),
                 reload=config.hot_reload,
