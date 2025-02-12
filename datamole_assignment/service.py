@@ -1,14 +1,28 @@
-from typing import AsyncGenerator
+from enum import Enum
+from datetime import datetime
+from typing import AsyncGenerator, Optional
 
 import httpx
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 from datamole_assignment.setup import config, log
 
 
+class EventType(str, Enum):
+    WATCH_EVENT = 'WatchEvent'
+    PULL_REQUEST_EVENT = 'PullRequestEvent'
+    ISSUES_EVENT = 'IssuesEvent'
+
 class Event(BaseModel):
     id: int
-    type: str
+    created_at: datetime
+    type: Optional[EventType] = None
+
+    @field_validator("type", mode="before")
+    @classmethod
+    def validate_event_type(cls, value):
+        # if unexpected value is encountered set None instead of raising an error
+        return value if value in EventType.__members__.values() else None
 
 
 class GithubService:
