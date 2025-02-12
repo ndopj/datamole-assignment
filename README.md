@@ -68,19 +68,24 @@ docker run -it -d -p 8080:8080 -v ./datamole_assignment/:/app/datamole_assignmen
 
 ## Usage
 
-Assignment implementation exposes two HTTP endpoints.  
+Assignment implementation exposes three HTTP endpoints.  
 > replace `{owner}` and `{repo}` in bellow paths with identifiers for existing public Github repository.  
 
 ```shell
 curl -X 'GET' \
-  'http://localhost:8080/v1/events/fastapi/fastapi/mean_time?type=PullRequestEvent' \
+  'http://localhost:8080/v1/events/{owner}/{repo}/mean_time?type=PullRequestEvent' \
   -H 'accept: application/json'
 ```
 ```shell
 curl -X 'GET' \
-  'http://localhost:8080/v1/{owner}/{repo}/fastapi/grouped?offset=3000' \
+  'http://localhost:8080/v1/events/{owner}/{repo}/fastapi/grouped?offset=3000' \
   -H 'accept: application/json'
-```  
+```
+```shell
+curl -X 'GET' \
+  'http://localhost:8080/v1/events/{owner}/{repo}/grouped/graph?offset=2000' \
+  -H 'accept: */*' --output barplot.png
+```
 
 **You can also navigate to**
 - `http://localhost:8080/`  
