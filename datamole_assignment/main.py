@@ -1,25 +1,25 @@
-from typing import Union
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
 
-from datamole_assignment.setup import config, log
-
-app = FastAPI()
-
-
-@app.get("/")
-def read_root():
-    log.info(f"Github URL: {config.github_url}")
-    log.debug("This is a debug messages")
-    log.warning("This is a warning message")
-    log.error("This is an error message")
-    return {"Hello": "World"}
+from datamole_assignment.setup import config, services
+from datamole_assignment.service import GithubService
+from datamole_assignment.api import events_router, root_router
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    github = GithubService()
+    services["github"] = github
+    yield # Application runtime. Start -> yield -> Stop
+    await github.close()
+    services.clear()
+
+
+app = FastAPI(lifespan=lifespan, docs_url="/swagger-ui.html")
+app.include_router(root_router)
+app.include_router(events_router, prefix="/v1/events", tags=["Events API"])
 
 
 if __name__ == '__main__':
