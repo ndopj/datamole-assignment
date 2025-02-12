@@ -7,6 +7,7 @@
 - [Local development](#local-development)
 - [Docker](#docker)
 - [Usage](#usage)
+- [C4 System Context diagram](#c4-system-context-diagram)
 
 
 ## About The Project
@@ -102,3 +103,11 @@ By default, the application does not authenticate with Github since it was not r
         }
     )
 ```
+
+## C4 System Context diagram
+
+> The focus should be on people (actors, roles, personas, etc) and software systems rather than technologies, protocols and other low-level details. It’s the sort of diagram that you could show to non-technical people.  
+
+- [https://c4model.com/diagrams/system-context](https://c4model.com/diagrams/system-context)  
+
+![diagram](c4-system-context.png)
