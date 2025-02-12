@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     hot_reload: bool = False
     github_url: str = "https://api.github.com"
 
+
 config = Settings()
 
 services = {}

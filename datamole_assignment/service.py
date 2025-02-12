@@ -3,7 +3,7 @@ import httpx
 from datamole_assignment.setup import config, log
 
 
-class GithubEventsService:
+class GithubService:
 
     def __init__(self):
         # https://docs.github.com/en/rest/activity/events?apiVersion=2022-11-28#list-public-events-for-a-network-of-repositories
