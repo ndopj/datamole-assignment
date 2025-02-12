@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from starlette.responses import RedirectResponse
 
 from datamole_assignment.setup import services
-from datamole_assignment.service import GithubService
+from datamole_assignment.service import GithubService, Event
 
 
 events_router = APIRouter()
@@ -16,7 +16,9 @@ async def get_root() -> RedirectResponse:
 
 
 @events_router.get("/")
-async def events():
+async def events(owner: str, repo: str) -> list[Event]:
     github: GithubService = services["github"]
-    response = await github.events("fastapi", "fastapi")
-    return response
+    events = []
+    async for event in github.events(owner, repo):
+        events.append(event)
+    return events
